@@ -1,0 +1,56 @@
+services:
+  nginx:
+    # restart: always
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./app/static:/static
+    links:
+      - app:app
+
+  app:
+    # restart: always
+    build: ./app
+    container_name: app
+    links:
+      - postgres:postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      DATABASE_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      SECRET_KEY: ${SECRET_KEY}
+    expose:
+      - "8000"
+    depends_on:
+      - postgres
+    command: >
+      sh -c "python3 ./create_db.py &&
+             gunicorn -w 2 -b :8000 app:app"
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./app
+          target: /
+        - action: rebuild
+          path: ./app/requirements.txt
+
+  postgres:
+    # restart: always
+    image: postgres:latest
+    container_name: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data: {}
