@@ -1,6 +1,5 @@
 """Views - Users"""
 from datetime import datetime, timezone
-from random import randint
 from flask import (
     Blueprint, abort, render_template, request, flash, redirect, url_for, session
 )
