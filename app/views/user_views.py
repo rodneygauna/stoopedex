@@ -28,7 +28,6 @@ def register_user():
     """Register a new user"""
 
     form = RegisterUserForm()
-    # TODO: Do I need to create a support route? If so, add check if first user
     if form.validate_on_submit():
         if User.query.filter_by(email=form.email.data).first():
             flash('This email is already registered', 'warning')
@@ -37,8 +36,9 @@ def register_user():
             firstname=form.firstname.data,
             lastname=form.lastname.data,
             email=form.email.data,
+            phone=form.phone.data,
             password_hash=generate_password_hash(form.password.data),
-            created_at=datetime.now(timezone=utc)
+            created_at=datetime.now(timezone.utc)
         )
         db.session.add(user)
         db.session.commit()
@@ -68,7 +68,7 @@ def login():
             return redirect(url_for('users.login'))
 
         session['user_id'] = user.id
-        return redirect(url_for('user.complete_login'))
+        return redirect(url_for('users.complete_login'))
     return render_template('users/login.html', title='Stoopdex - Login', form=form)
 
 

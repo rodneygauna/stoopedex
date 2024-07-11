@@ -11,4 +11,4 @@ core_bp = Blueprint('core', __name__)
 def index():
     """Home page"""
 
-    render_template('index.html', title='Stoopedex')
+    return render_template('core/index.html', title='Stoopedex')
