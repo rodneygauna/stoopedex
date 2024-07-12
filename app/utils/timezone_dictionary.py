@@ -1,3 +1,4 @@
+"""Timzone - Dictionary"""
 TIMEZONES = [
     ("US/Alaska", "US/Alaska (-08:00AKDT)"),
     ("US/Aleutian", "US/Aleutian (-09:00HDT)"),

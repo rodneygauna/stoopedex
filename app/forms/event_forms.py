@@ -26,7 +26,7 @@ class EventForm(FlaskForm):
     address2 = StringField("Address 2", validators=[DataRequired()])
     city = StringField("City", validators=[DataRequired()])
     state = StringField("State", validators=[DataRequired()])
-    zip = StringField("Zipcode", validators=[DataRequired()])
+    zipcode = StringField("Zipcode", validators=[DataRequired()])
     submit = SubmitField("Save Event")
 
 

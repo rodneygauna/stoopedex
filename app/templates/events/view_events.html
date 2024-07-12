@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% block content %}
+<h1>Upcoming Stoop Sales</h1>
+<div>
+  <table>
+    <tr>
+      <th>Event Title</th>
+    </tr>
+    {% for e in event_info %}
+    <tr><td>{{ e.title }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock content %}

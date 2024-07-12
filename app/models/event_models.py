@@ -12,7 +12,7 @@ class Event(db.Model):
     __tablename__ = "events"
 
     id = db.Column(db.Integer, primary_key=True)
-    event_leader_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    event_leader_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.Text, nullable=False)
     subtitle = db.Column(db.Text)
     description = db.Column(db.Text)
@@ -25,11 +25,11 @@ class Event(db.Model):
     address2 = db.Column(db.Text)
     city = db.Column(db.Text)
     state = db.Column(db.Text)
-    zip = db.Column(db.Text)
+    zipcode = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-    updated_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    updated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 # Model - Event Attendee

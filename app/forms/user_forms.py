@@ -1,23 +1,14 @@
 """Users - Forms"""
 from flask_wtf import FlaskForm
-from wtforms import (
-    StringField,
-    PasswordField,
-    SubmitField,
-)
-from wtforms.validators import (
-    DataRequired,
-    Email,
-    EqualTo,
-    Length,
-)
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 
 # Register user form
 class RegisterUserForm(FlaskForm):
     """Register user form"""
 
-    firstname= StringField('First Name*', validators=[DataRequired()])
+    firstname = StringField('First Name*', validators=[DataRequired()])
     lastname = StringField('Last Name*', validators=[DataRequired()])
     email = StringField('Email*', validators=[DataRequired(), Email()])
     phone = StringField('Phone*', validators=[DataRequired()])
@@ -26,16 +17,6 @@ class RegisterUserForm(FlaskForm):
     pass_confirm = PasswordField(
         'Confirm Password*', validators=[DataRequired()])
     submit = SubmitField('Register')
-
-
-# Form - Short Code
-class ShortCodeForm(FlaskForm):
-    """Short Code Form"""
-
-    short_code = StringField(
-        label="Short Code*", validators=[DataRequired(), Length(min=6, max=6)]
-    )
-    submit = SubmitField(label="Submit")
 
 
 # Form - Login
