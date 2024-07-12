@@ -18,8 +18,7 @@
       <iframe
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDWMbesyDQVWSd8CkLfPKBu_UPop0b7k68
-    &q={{ e.address1 }}+{{ e.city }}+{{ e.state }}+{{ e.zipcode }}"
+        src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_MAPS_API_KEY }}&q={{ e.address1 }}+{{ e.city }}+{{ e.state }}+{{ e.zipcode }}"
       >
       </iframe>
       <div class="card-body">

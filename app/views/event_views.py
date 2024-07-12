@@ -1,4 +1,5 @@
 """Views - Events"""
+import os
 from datetime import datetime, timezone
 
 from flask import Blueprint, render_template, flash, redirect, url_for
@@ -14,6 +15,10 @@ from app import db
 
 # Blueprint configuration
 event_bp = Blueprint('events', __name__)
+
+
+# Google Maps API Key
+GOOGLE_MAPS_API_KEY = os.environ['GOOGLE_MAPS_API_KEY']
 
 
 # Create Events
@@ -83,7 +88,8 @@ def event(event_id):
         event_roster=event_roster,
         is_current_user_canceled=is_current_user_canceled,
         is_current_user_in_roster=is_current_user_in_roster,
-        is_current_user_event_leader=is_current_user_event_leader
+        is_current_user_event_leader=is_current_user_event_leader,
+        GOOGLE_MAPS_API_KEY=GOOGLE_MAPS_API_KEY
     )
 
 
@@ -96,7 +102,8 @@ def view_events():
 
     return render_template('events/view_events.html',
                            title='Stoopedex - All Events',
-                           all_event_info=all_event_info)
+                           all_event_info=all_event_info,
+                           GOOGLE_MAPS_API_KEY=GOOGLE_MAPS_API_KEY)
 
 
 # Sign up for event
