@@ -23,11 +23,13 @@ login_manager.login_view = 'users.login'
 
 
 # Flask Blueprints - Imports
+from utils.faker_db import faker_bp
 from views.user_views import users_bp
 from views.event_views import event_bp
 from views.core_view import core_bp
 
 # Flask Blueprints - Register
+app.register_blueprint(faker_bp)
 app.register_blueprint(users_bp)
 app.register_blueprint(event_bp)
 app.register_blueprint(core_bp)

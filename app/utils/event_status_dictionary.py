@@ -1,7 +1,6 @@
 """Event Status - Dictionary"""
 EVENT_STATUS = [
-    ("open", "Open"),
-    ("closed", "Closed"),
+    ("active", "Active"),
     ("canceled", "Canceled"),
     ("completed", "Completed"),
 ]

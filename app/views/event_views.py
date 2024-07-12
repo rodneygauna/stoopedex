@@ -25,8 +25,9 @@ def create_event():
     form = EventForm()
     if form.validate_on_submit():
         new_event = Event()
+        form.populate_obj(new_event)
         new_event.event_leader_id = current_user.id
-        new_event.create_by = current_user.id
+        new_event.created_by = current_user.id
         db.session.add(new_event)
         db.session.commit()
         flash('Event created successfully', 'success')
@@ -50,7 +51,7 @@ def edit_event(event_id):
         db.session.commit()
         flash('Event updated successfully.', 'success')
         return redirect(url_for('events.view_events'))
-    return render_template('events/edit_event.html',
+    return render_template('events/create_event.html',
                            title='Stoopedex - Edit Stoop Sale', form=form)
 
 
@@ -134,7 +135,7 @@ def event_signup(event_id):
 
 # Cancel Sign up for event
 @event_bp.route("/cancel_event_signup/<int:event_id>",
-                 methods=["GET", "POST"])
+                methods=["GET", "POST"])
 @login_required
 def cancel_event_signup(event_id):
     """Changes event status to canceled"""

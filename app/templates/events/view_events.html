@@ -1,14 +1,38 @@
 {% extends "_base.html" %}
 {% block content %}
 <h1>Upcoming Stoop Sales</h1>
+{% if current_user.is_authenticated %}
+    <a href="{{ url_for('events.create_event') }}">Create a New Stoop Sale</a>
+{% else %}
+    <a href="{{ url_for('users.login') }}">Login to Create a New Stoop Sale</a>
+{% endif %}
 <div>
-  <table>
+<table>
     <tr>
-      <th>Event Title</th>
+        <th>Event Title</th>
+        <th>Event Date</th>
+        <th>Event Time</th>
+        <th>Event Address</th>
+        <th>Event Status</th>
+        <th># of Interested People</th>
+        <th>Actions</th>
     </tr>
-    {% for e in event_info %}
-    <tr><td>{{ e.title }}</td></tr>
+    {% for e in all_event_info %}
+    <tr>
+        <td>{{ e.title }}</td>
+        <td>{{ e.start_date.strftime('%A, %B %d, %Y') }}</td>
+        <td>{{ e.start_time.strftime('%I:%M %p') }}</td>
+        <td>{{ e.address1 }} {{ e.address2 }} {{ e.city }} {{ e.state }} {{ e.zipcode }}</td>
+        <td>{{ e.event_status }}</td>
+        <td>{{ e.attendee_count }}</td>
+        <td>
+            <a href="{{ url_for('events.event', event_id=e.id) }}">View</a>
+            {% if current_user.id == e.event_leader_id %}
+                <a href="{{ url_for('events.edit_event', event_id=e.id) }}">Edit</a>
+            {% endif %}
+        </td>
+    </tr>
     {% endfor %}
-  </table>
+</table>
 </div>
 {% endblock content %}

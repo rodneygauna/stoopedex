@@ -26,7 +26,7 @@ def event_info(event_id):
         Event.city,
         Event.state,
         Event.zipcode,
-        Event.status,
+        Event.event_status,
         User.firstname,
         User.lastname
         # Need to filter out inactive status events
@@ -52,7 +52,7 @@ def event_attendee_info(event_id):
     )\
         .join(User, EventAttendee.attendee_id == User.id)\
         .filter(EventAttendee.event_id == event_id)\
-        .order_by(EventAttendee.updated_date.asc()).all()
+        .order_by(EventAttendee.updated_at.asc()).all()
 
     return event_attendee_details
 
@@ -64,24 +64,28 @@ def all_events():
 
     today = datetime.now().date()
     page = request.args.get('page', 1, type=int)
-    events_info = db.session.query(
+    all_events_info = db.session.query(
         Event.id,
         Event.start_date,
         Event.start_time,
         Event.start_timezone,
         Event.title,
         Event.description,
+        Event.address1,
+        Event.address2,
+        Event.city,
+        Event.state,
+        Event.zipcode,
         Event.event_status,
-        Event.updated_at,
         db.func.count(EventAttendee.attendee_id).label("attendee_count"),
     )\
         .join(User, Event.event_leader_id == User.id)\
         .outerjoin(EventAttendee, db.and_(
             Event.id == EventAttendee.event_id,
             EventAttendee.attendee_status == 'interested'))\
-        .filter(Event.start_date >= today, Event.event_status == "open")\
+        .filter(Event.start_date >= today, Event.event_status == "active")\
         .group_by(Event.id)\
         .order_by(Event.start_date.asc(), Event.start_time.asc())\
-        .paginate(page=page, per_page=5)
+        .paginate(page=page, per_page=10)
 
-    return events_info
+    return all_events_info

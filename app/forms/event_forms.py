@@ -5,6 +5,7 @@ from wtforms import (SubmitField, SelectField, TextAreaField,
 from wtforms.validators import DataRequired
 from utils.event_status_dictionary import EVENT_STATUS
 from utils.timezone_dictionary import TIMEZONES
+from utils.us_states_dictionary import STATE
 
 
 # Form - Create Event
@@ -23,9 +24,9 @@ class EventForm(FlaskForm):
     start_timezone = SelectField("Timezone", choices=TIMEZONES,
                                  validators=[DataRequired()])
     address1 = StringField("Address", validators=[DataRequired()])
-    address2 = StringField("Address 2", validators=[DataRequired()])
+    address2 = StringField("Address 2")
     city = StringField("City", validators=[DataRequired()])
-    state = StringField("State", validators=[DataRequired()])
+    state = SelectField("State", choices=STATE, validators=[DataRequired()])
     zipcode = StringField("Zipcode", validators=[DataRequired()])
     submit = SubmitField("Save Event")
 
