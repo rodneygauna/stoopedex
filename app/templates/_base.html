@@ -9,13 +9,14 @@
       href="{{ url_for('static', filename='normalize/css/normalize-8-0-1.css') }}"
     />
     <link rel="stylesheet" href="{{ url_for('static', filename='zestyux/css/zesty.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='zestyux/css/styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
   </head>
   <body>
     <div class="container">
+      {% include '_flash.html' %}
       {% block content %} {% endblock content %}
     </div>
-    <script src="{{ url_for('static', filename='js/main.js') }}" />
-    </script>
+    <script src="{{ url_for('static', filename='zestyux/js/zesty.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   </body>
 </html>

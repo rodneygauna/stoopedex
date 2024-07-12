@@ -1,10 +1,10 @@
 /*
-* Zesty UX
-* Copyright 2023, Rodney Gauna
-* www.zestyux.com
-* Free to use under the GNU GPL v3.0 license
-* http://www.gnu.org/licenses/gpl.html
-*/
+ * Zesty UX
+ * Copyright 2023, Rodney Gauna
+ * www.zestyux.com
+ * Free to use under the GNU GPL v3.0 license
+ * http://www.gnu.org/licenses/gpl.html
+ */
 
 /* Table of Contents
 ---------------------------
@@ -29,31 +29,30 @@ closeBtn.addEventListener('click', () => {
 
 /* Dark Mode Functionality
 --------------------------- */
-const darkMode = document.querySelector('.dark-mode');
-const userHasDarkMode = localStorage.getItem('dark-mode') === 'enabled';
+const darkMode = document.querySelector(".dark-mode");
+const userHasDarkMode = localStorage.getItem("dark-mode") === "enabled";
 
 if (userHasDarkMode) {
-    document.body.classList.add('dark-mode-variables');
-    darkMode.querySelector('span:nth-child(1)').classList.remove('active');
-    darkMode.querySelector('span:nth-child(2)').classList.add('active');
+  document.body.classList.add("dark-mode-variables");
+  darkMode.querySelector("span:nth-child(1)").classList.remove("active");
+  darkMode.querySelector("span:nth-child(2)").classList.add("active");
 }
 
-darkMode.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode-variables');
-    darkMode.querySelector('span:nth-child(1)').classList.toggle('active');
-    darkMode.querySelector('span:nth-child(2)').classList.toggle('active');
-    // Remember user preference in local storage
-    if (document.body.classList.contains('dark-mode-variables')) {
-        localStorage.setItem('dark-mode', 'enabled');
-    }
-    else {
-        localStorage.setItem('dark-mode', 'disabled');
-    }
-})
+darkMode.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode-variables");
+  darkMode.querySelector("span:nth-child(1)").classList.toggle("active");
+  darkMode.querySelector("span:nth-child(2)").classList.toggle("active");
+  // Remember user preference in local storage
+  if (document.body.classList.contains("dark-mode-variables")) {
+    localStorage.setItem("dark-mode", "enabled");
+  } else {
+    localStorage.setItem("dark-mode", "disabled");
+  }
+});
 
 /* Banner Functionality
 --------------------------- */
-var fadeOutInterval;
+/* var fadeOutInterval;
 
 function showBanner() {
     var banner = document.getElementsByClassName("banner")[0];
@@ -82,4 +81,21 @@ function resetHideTimer() {
 var bannerSuccess = document.getElementsByClassName("banner success")[0];
 if (bannerSuccess) {
     resetHideTimer();
+} */
+
+/* Banner Functionality with Improvements
+------------------------------------------ */
+var fadeOutInterval;
+
+// Improved banner display using CSS transitions
+function showBanner() {
+  var banner = document.querySelector(".banner");
+  banner.style.display = "flex";
+  banner.style.opacity = "1";
+  resetHideTimer();
+}
+
+function hideBanner() {
+  var banner = document.querySelector(".banner");
+  banner.style.opacity = "0";
 }
