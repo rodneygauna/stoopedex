@@ -51,8 +51,9 @@ def event_attendee_info(event_id):
         User.lastname,
     )\
         .join(User, EventAttendee.attendee_id == User.id)\
-        .filter(EventAttendee.event_id == event_id)\
-        .order_by(EventAttendee.updated_at.asc()).all()
+        .filter(EventAttendee.event_id == event_id,
+                EventAttendee.attendee_status == 'interested')\
+        .order_by(EventAttendee.created_at.asc()).all()
 
     return event_attendee_details
 

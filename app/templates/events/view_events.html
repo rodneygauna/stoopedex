@@ -26,7 +26,7 @@
         <td>{{ e.event_status }}</td>
         <td>{{ e.attendee_count }}</td>
         <td>
-            <a href="{{ url_for('events.event', event_id=e.id) }}">View</a>
+            <a href="{{ url_for('events.event', event_id=e.id) }}">View & Sign Up</a>
             {% if current_user.id == e.event_leader_id %}
                 <a href="{{ url_for('events.edit_event', event_id=e.id) }}">Edit</a>
             {% endif %}

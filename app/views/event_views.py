@@ -110,18 +110,15 @@ def event_signup(event_id):
     if event.event_leader_id == current_user.id:
         flash('You are the leader of this event, you do not have sign up',
               'info')
-    if event.status != 'open':
+    if event.event_status != 'active':
         flash('The event is no longer open for signups.', 'danger')
-        return redirect(url_for('events.event', event_id=event_id))
-    if event.start_date >= datetime.now(timezone.utc):
-        flash('The event already happened, but thank you for your interest',
-              'warning')
         return redirect(url_for('events.event', event_id=event_id))
     if form.validate_on_submit():
         event_signup_data = EventAttendee(
             event_id=event_id,
             attendee_id=current_user.id,
             attendee_status='interested',
+            comments=form.comments.data,
             created_by=current_user.id,
             created_at=datetime.now(timezone.utc)
         )
@@ -130,7 +127,8 @@ def event_signup(event_id):
         flash('You have successfully signed up for the event.', 'success')
         return redirect(url_for('events.event', event_id=event_id))
     return render_template('events/event_signup.html',
-                           title='Stoopedex - Event Signup', form=form)
+                           title='Stoopedex - Event Signup', event=event,
+                           form=form)
 
 
 # Cancel Sign up for event

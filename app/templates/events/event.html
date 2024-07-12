@@ -1,31 +1,37 @@
-{% extends "_base.html" %}
-{% block content %}
+{% extends "_base.html" %} {% block content %}
 <h1>{{ event.title }}</h1>
 <p>{{ event.start_date.strftime('%A, %B %d, %Y') }}</p>
 <p>{{ event.start_time.strftime('%I:%M %p') }}</p>
-<p>{{ event.address1 }} {{ event.address2 }} {{ event.city }} {{ event.state }} {{ event.zipcode }}</p>
+<p>
+  {{ event.address1 }} {{ event.address2 }} {{ event.city }} {{ event.state }}
+  {{ event.zipcode }}
+</p>
 <p>{{ event.event_status }}</p>
 
 <iframe
   width="600"
   height="450"
-  style="border:0"
+  style="border: 0"
   loading="lazy"
   allowfullscreen
   referrerpolicy="no-referrer-when-downgrade"
   src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDWMbesyDQVWSd8CkLfPKBu_UPop0b7k68
-    &q={{ event.address1 }}+{{ event.city }}+{{ event.state }}+{{ event.zipcode }}">
+    &q={{ event.address1 }}+{{ event.city }}+{{ event.state }}+{{ event.zipcode }}"
+>
 </iframe>
 
-{% if current_user.is_authenticated %}
-    <a href="{{ url_for('events.edit_event', event_id=event.id) }}">Edit</a>
+{% if current_user.is_authenticated and not is_current_user_in_roster %}
+<a href="{{ url_for('events.event_signup', event_id=event.id) }}">Interested</a>
+{% elif current_user.is_authenticated and is_current_user_in_roster %}
+<a href="{{ url_for('events.cancel_event_signup', event_id=event.id) }}">Remove Me</a>
+{% endif %}
+{% if current_user.id == event.event_leader_id %}
+<a href="{{ url_for('events.edit_event', event_id=event.id) }}">Edit</a>
 {% endif %}
 
 <h2>Interested People</h2>
 {% for user in event_roster %}
-    <p>{{ user.firstname }}</p>
-    <p>{{ user.attendee_status }}</p>
-    <p>{{ user.comments }}</p>
-{% endfor %}
-
-{% endblock content %}
+<p>{{ user.firstname }}</p>
+<p>{{ user.attendee_status }}</p>
+<p>{{ user.comments }}</p>
+{% endfor %} {% endblock content %}
