@@ -1,6 +1,42 @@
-{% extends "_base.html" %}
-{% block content %}
-<div>
-  <h1>Stoopedex</h1>
+{% extends "_base.html" %} {% block content %}
+<div class="px-4 pt-5 my-5 text-center border-bottom">
+  <h1 class="display-4 fw-bold text-body-emphasis">Stoopedex</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">
+      Welcome to Stoopedex, your ultimate guide to finding the best stoop sales
+      in your neighborhood. Whether you're looking for hidden treasures, unique
+      finds, or just a fun weekend activity, we've got you covered. Explore our
+      site to discover upcoming sales, tips for buyers and sellers, and stories
+      from our community.
+    </p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+      <a
+        href="{{ url_for('users.login') }}"
+        type="button"
+        class="btn btn-primary btn-lg px-4 me-sm-3"
+      >
+        Log In
+      </a>
+      <a
+        href="{{ url_for('events.view_events') }}"
+        type="button"
+        class="btn btn-outline-secondary btn-lg px-4"
+      >
+        Find Stoop Sales
+      </a>
+    </div>
+  </div>
+  <div class="overflow-hidden" style="max-height: 30vh">
+    <div class="container px-5">
+      <img
+        src="{{ url_for('static', filename='img/stoop.png') }}"
+        class="img-fluid border rounded-3 shadow-lg mb-4"
+        alt="Example image"
+        width="700"
+        height="500"
+        loading="lazy"
+      />
+    </div>
+  </div>
 </div>
 {% endblock content %}

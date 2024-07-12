@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1", name="viewport" />
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+      ,
+      name="viewport"
+    />
     <title>{{ title }}</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='normalize/css/normalize-8-0-1.css') }}"
+      href="{{ url_for('static', filename='bootstrap/bootstrap.css') }}"
     />
-    <link rel="stylesheet" href="{{ url_for('static', filename='zestyux/css/zesty.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
   </head>
   <body>
     <div class="container">
-      {% include '_flash.html' %}
-      {% block content %} {% endblock content %}
+      {% include '_nav.html' %} {% include '_flash.html' %} {% block content %}
+      {% endblock content %}
     </div>
-    <script src="{{ url_for('static', filename='zestyux/js/zesty.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/bootstrap.bundle.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   </body>
 </html>

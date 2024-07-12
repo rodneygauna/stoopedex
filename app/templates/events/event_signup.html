@@ -2,7 +2,10 @@
 <h1>Sign Up - {{ event.title }}</h1>
 <form method="POST">
   {{ form.hidden_tag() }}
-  {{ form.comments.label() }} {{ form.comments() }}
-  {{ form.submit() }}
+  <div class="mb-3">
+    {{ form.comments.label(class='form-label') }} {{
+    form.comments(class='form-control') }}
+  </div>
+  {{ form.submit(class='btn btn-primary') }}
 </form>
 {% endblock content %}

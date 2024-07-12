@@ -1,37 +1,81 @@
 {% extends "_base.html" %} {% block content %}
-<h1>{{ event.title }}</h1>
-<p>{{ event.start_date.strftime('%A, %B %d, %Y') }}</p>
-<p>{{ event.start_time.strftime('%I:%M %p') }}</p>
-<p>
-  {{ event.address1 }} {{ event.address2 }} {{ event.city }} {{ event.state }}
-  {{ event.zipcode }}
-</p>
-<p>{{ event.event_status }}</p>
+<div class="container px-4 py-5">
+  <h2 class="pb-2 border-bottom">{{ event.title }}</h2>
 
-<iframe
-  width="600"
-  height="450"
-  style="border: 0"
-  loading="lazy"
-  allowfullscreen
-  referrerpolicy="no-referrer-when-downgrade"
-  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDWMbesyDQVWSd8CkLfPKBu_UPop0b7k68
-    &q={{ event.address1 }}+{{ event.city }}+{{ event.state }}+{{ event.zipcode }}"
->
-</iframe>
-
-{% if current_user.is_authenticated and not is_current_user_in_roster %}
-<a href="{{ url_for('events.event_signup', event_id=event.id) }}">Interested</a>
-{% elif current_user.is_authenticated and is_current_user_in_roster %}
-<a href="{{ url_for('events.cancel_event_signup', event_id=event.id) }}">Remove Me</a>
-{% endif %}
-{% if current_user.id == event.event_leader_id %}
-<a href="{{ url_for('events.edit_event', event_id=event.id) }}">Edit</a>
-{% endif %}
-
-<h2>Interested People</h2>
-{% for user in event_roster %}
-<p>{{ user.firstname }}</p>
-<p>{{ user.attendee_status }}</p>
-<p>{{ user.comments }}</p>
-{% endfor %} {% endblock content %}
+  <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+    <div class="col d-flex flex-column align-items-start gap-2">
+      <h2 class="fw-bold text-body-emphasis">{{ event.subtitle }}</h2>
+      <p class="text-body-secondary">{{ event.description }}</p>
+      {% if current_user.is_authenticated and not is_current_user_in_roster %}
+      <a
+        href="{{ url_for('events.event_signup', event_id=event.id) }}"
+        class="btn btn-primary btn-lg"
+        >I'm Interested</a
+      >
+      {% elif current_user.is_authenticated and is_current_user_in_roster %}
+      <a
+        href="{{ url_for('events.cancel_event_signup', event_id=event.id) }}"
+        class="btn btn-secondary btn-lg"
+        >Not Interested Anymore</a
+      >
+      {% endif %}
+    </div>
+    <div class="col">
+      <div class="row row-cols-1 row-cols-sm-2 g-4">
+        <div class="col d-flex flex-column gap-2">
+          <div
+            class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3"
+          ></div>
+          <h4 class="fw-semibold mb-0 text-body-emphasis">Date:</h4>
+          <p class="text-body-secondary">
+            {{ event.start_date.strftime('%A, %B %d, %Y') }}
+          </p>
+        </div>
+        <div class="col d-flex flex-column gap-2">
+          <div
+            class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3"
+          ></div>
+          <h4 class="fw-semibold mb-0 text-body-emphasis">Time:</h4>
+          <p class="text-body-secondary">
+            {{ event.start_time.strftime('%I:%M %p') }}
+          </p>
+        </div>
+        <div class="col d-flex flex-column gap-2">
+          <div
+            class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3"
+          ></div>
+          <h4 class="fw-semibold mb-0 text-body-emphasis">Location:</h4>
+          <p class="text-body-secondary">
+            {{ event.address1 }} {{ event.address2 }} {{ event.city }} {{
+            event.state }} {{ event.zipcode }}
+          </p>
+        </div>
+        <div class="col d-flex flex-column gap-2">
+          <div
+            class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3"
+          ></div>
+          <h4 class="fw-semibold mb-0 text-body-emphasis">Event Status</h4>
+          <p class="text-body-secondary">{{ event.event_status }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container px-4 py-5" id="icon-grid">
+  <h2 class="pb-2 border-bottom">Intered People</h2>
+  <div
+    class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5"
+  >
+    {% for user in event_roster %}
+    <div class="col d-flex align-items-start">
+      <div>
+        <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">
+          {{ user.firstname }}
+        </h3>
+        <p>{{ user.comments }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}
